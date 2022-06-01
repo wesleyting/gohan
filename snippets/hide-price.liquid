@@ -1,0 +1,65 @@
+<script type="text/javascript">var hidePriceScripttags = [{"scripttags":"storage.googleapis.com\/singleton-software-bucket\/logintoseeprice\/prod\/main.js"},{"scripttags":"storage.googleapis.com\/singleton-software-bucket\/logintoseeprice\/prod\/main_v2.js"},{"scripttags":"storage.googleapis.com\/singleton-software-bucket\/logintoseeprice\/prod\/main_v3.js"},{"scripttags":"storage.googleapis.com\/singleton-software-bucket\/logintoseeprice\/prod\/main_v4.js"}];var hidePriceStoreID = 2792;</script>{% assign hpElementsToShowMessageForVisitors = '.hidePrice' %}
+{% assign hpElementsToHide = 'form[action*="/cart/add"] button, form button[name="add"], form[action*="/cart/add"] input[type="submit"], a[href*="/cart"], .shopify-payment-button, .product__policies, .product__tax' %}
+<script type="text/javascript">
+    var customerIsLogged = false;
+    var customerAccountsEnabled = false;
+  	var hpElementsToShowMessageForVisitors = '{{hpElementsToShowMessageForVisitors}}';
+  	var hpElementsToHide = '{{hpElementsToHide}}';
+  	var hpPathToProductDetailPrice = '';
+  	var hpElementDepth = 7;
+</script>
+{% if shop.customer_accounts_enabled %}
+    <script type="text/javascript">
+        var customerAccountsEnabled = true;
+    </script>
+    {% if customer %}
+        <script type="text/javascript">
+            var customerIsLogged = true;
+        </script>
+    {% else %}
+        <div id="hidePriceStyles">
+            {% if template.name != "cart" %}
+                <style>
+                    {{hpElementsToShowMessageForVisitors}} {display:none !important;} {{hpElementsToHide}} {display:none !important;}
+                </style>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endif %}
+<script type="text/javascript">
+  	var intervalId = null;
+  	var varCounter = 0;
+  	var containScriptTagFirstControll = false;
+  	var containScriptTagSecondControll = false;
+	window.onload = function() {
+		hpAllscripts = document.getElementsByTagName("script");
+		for (var i = 0; i < hpAllscripts.length; i++) {
+			for (var j = 0; j < hidePriceScripttags.length; j++) {
+              	if (hpAllscripts[i].src.includes(hidePriceScripttags[j].scripttags)) {
+					containScriptTagFirstControll = true;
+				}
+			}
+		}
+		if (!containScriptTagFirstControll) {
+			intervalId = setInterval(function() {
+				if (varCounter < 5) {
+					varCounter++;
+					hpAllscripts = document.getElementsByTagName("script");
+					for (var i = 0; i < hpAllscripts.length; i++) {
+						for (var j = 0; j < hidePriceScripttags.length; j++) {
+                            if (hpAllscripts[i].src.includes(hidePriceScripttags[j].scripttags)) {
+                                containScriptTagSecondControll = true;
+                            }
+                        }
+                    }
+				} else {
+					if (!containScriptTagSecondControll) {
+						item = document.getElementById("hidePriceStyles");
+                        item.parentNode.removeChild(item);
+                    }  clearInterval(intervalId);
+				}
+			}, 100);
+        }
+	}
+</script>
+{% include 'hide-price-config' %}

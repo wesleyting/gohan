@@ -1,0 +1,21 @@
+{% unless customer %}
+                        <style id="hideWlmStyle">
+                        .ajax_add_to_cart, .product-form__add-button, #addToCart, .add_to_cart, .product-form__cart-submit, .add-to-cart, .product-submit, .add, .product-form--atc-button, form[action$="/cart/add"] [type="submit"], .shopify-payment-button{
+                                display:none !important;
+                            }
+                        </style>
+                        <style id="wlmhideprice">
+                            .wlm-login-link {}
+                            .wlm-login-link {font-size:initial}
+                            .price-item {font-size: 0;}
+    						.grid-product__price--savings, .sale_banner, .product-item__price--old .wlm-login-link, .label--on-sale, .original-price .wlm-login-link, .label.sale, .compare-at .wlm-login-link, .sticker--sale, .Price--compareAt .wlm-login-link, .ProductItem__Label--onSale, .reducedfrom .wlm-login-link, .productlabel.sale, .was_price .wlm-login-link, .sale_banner, .grid-product__price--original .wlm-login-link, .grid-product__tag--sale, span[hidewlm], .price__badges, .product-label--on-sale, .price--compare .wlm-login-link, .price__compare .wlm-login-link, s .wlm-login-link{display:none !important}
+                        </style>
+                        <script>
+                        var wlmHidePrice = {};
+                        wlmHidePrice.textPrice = "Login to view price" ;
+                        wlmHidePrice.hideAddToCart = parseInt("0");
+                        wlmHidePrice.status = parseInt("1");
+                        </script>
+                        <script type="text/javascript" src="https://gohantrading.ca/apps/wlm/js/wlmhideprice.js?v=63"></script>
+            {% endunless %}
+        
